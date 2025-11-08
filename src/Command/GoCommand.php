@@ -27,17 +27,17 @@ class GoCommand extends Command
     {
 
         $data = [
-            'title' => 'Title',
-            'description' => 'Description',
-            'content' => 'Content',
-            'published_at' => '2020-12-12',
-            'status' => 2,
+            'title' => 'Title edited',
+            'description' => 'Description edited',
+            'content' => 'Content edited',
+            'published_at' => '2020-12-30',
+            'status' => 3,
             'category_id' => 1,
         ];
 
         $category = $this->em->getRepository(Category::class)->find($data['category_id']);
 
-        $post = new Post();
+        $post = $this->em->getRepository(Post::class)->find(2);
 
         $post->setTitle($data['title']);
         $post->setDescription($data['description']);
