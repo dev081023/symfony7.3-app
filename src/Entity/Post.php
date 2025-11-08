@@ -27,7 +27,7 @@ class Post
     private ?\DateTimeImmutable $publishedAt = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $status = null;
+    private ?int $status = 1;
 
     public function getId(): ?int
     {
