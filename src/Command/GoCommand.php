@@ -39,14 +39,7 @@ class GoCommand extends Command
 
         $post = $this->em->getRepository(Post::class)->find(2);
 
-        $post->setTitle($data['title']);
-        $post->setDescription($data['description']);
-        $post->setContent($data['content']);
-        $post->setPublishedAt(new \DateTimeImmutable($data['published_at']));
-        $post->setStatus($data['status']);
-        $post->setCategory($category);
-
-        $this->em->persist($post);
+        $this->em->remove($post);
         $this->em->flush();
 
         return Command::SUCCESS;
