@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\Category;
 use App\Entity\Post;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,6 +40,8 @@ class GoCommand extends Command
             'category_id' => 1,
         ];
 
+        $category = $this->em->getRepository(Category::class)->find($data['category_id']);
+
         $post = new Post();
 
         $post->setTitle($data['title']);
@@ -46,7 +49,7 @@ class GoCommand extends Command
         $post->setContent($data['content']);
         $post->setPublishedAt($data['published_at']);
         $post->setStatus($data['status']);
-        $post->setCategory($data['category_id']);
+        $post->setCategory($category);
 
         $this->em->persist($post);
         $this->em->flush();
