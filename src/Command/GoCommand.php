@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\Category;
 use App\Entity\Post;
+use App\Entity\Tag;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -35,11 +36,13 @@ class GoCommand extends Command
             'category_id' => 1,
         ];
 
-        $category = $this->em->getRepository(Category::class)->find($data['category_id']);
+        $post = $this->em->getRepository(Post::class)->find(1);
+        $tag = $this->em->getRepository(Tag::class)->find(1);
 
-        $post = $this->em->getRepository(Post::class)->find(2);
+//        $post->addTag($tag);
+        $post->removeTag($tag);
 
-        $this->em->remove($post);
+        $this->em->persist($post);
         $this->em->flush();
 
         return Command::SUCCESS;
