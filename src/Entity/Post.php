@@ -146,4 +146,13 @@ class Post
 
         return $this;
     }
+
+    public function toggleTag(Tag $tag): static
+    {
+        // If the tag exists, we remove it.
+        // If not, we create it.
+        $this->tags->contains($tag) ? $this->removeTag($tag) : $this->addTag($tag);
+
+        return $this;
+    }
 }

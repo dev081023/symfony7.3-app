@@ -2,7 +2,6 @@
 
 namespace App\Command;
 
-use App\Entity\Category;
 use App\Entity\Post;
 use App\Entity\Tag;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,8 +38,7 @@ class GoCommand extends Command
         $post = $this->em->getRepository(Post::class)->find(1);
         $tag = $this->em->getRepository(Tag::class)->find(1);
 
-//        $post->addTag($tag);
-        $post->removeTag($tag);
+        $post->toggleTag($tag);
 
         $this->em->persist($post);
         $this->em->flush();
