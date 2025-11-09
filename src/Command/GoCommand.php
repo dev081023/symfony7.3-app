@@ -4,7 +4,7 @@ namespace App\Command;
 
 use App\Entity\Category;
 use App\Entity\Post;
-use App\Entity\Tag;
+use App\Service\PostService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -19,6 +19,7 @@ class GoCommand extends Command
 {
     public function __construct(
         private EntityManagerInterface $em,
+        private PostService $postService,
     )
     {
         parent::__construct();
@@ -37,12 +38,17 @@ class GoCommand extends Command
         ];
 
         $category = $this->em->getReference(Category::class, $data['category_id']);
-
         $post = new Post();
+
+        $post->setTitle($data['title']);
+        $post->setDescription($data['description']);
+        $post->setContent($data['content']);
+        $post->setPublishedAt(new \DateTimeImmutable($data['published_at']));
+        $post->setStatus($data['status']);
         $post->setCategory($category);
 
-        $this->em->persist($post);
-        $this->em->flush();
+        $post = $this->postService->store($post);
+        dd($post);
 
         return Command::SUCCESS;
     }
