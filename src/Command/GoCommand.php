@@ -10,6 +10,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[AsCommand(
     name: 'go',
@@ -19,7 +20,8 @@ class GoCommand extends Command
 {
     public function __construct(
         private EntityManagerInterface $em,
-        private PostService $postService,
+        private PostService            $postService,
+        private ValidatorInterface     $validator,
     )
     {
         parent::__construct();
@@ -46,6 +48,9 @@ class GoCommand extends Command
         $post->setPublishedAt(new \DateTimeImmutable($data['published_at']));
         $post->setStatus($data['status']);
         $post->setCategory($category);
+
+        $errors = $this->validator->validate($post);
+        dd($errors);
 
         $post = $this->postService->store($post);
         dd($post);
