@@ -16,6 +16,6 @@ class PostResource
 
     public function postItem(Post $post)
     {
-        return $this->serializer->serialize($post, 'json');
+        return $this->serializer->serialize($post, 'json', ['groups' => ['post:item']]);
     }
 }
