@@ -5,12 +5,12 @@ namespace App\Command;
 use App\Entity\Category;
 use App\Entity\Post;
 use App\Service\PostService;
+use App\Validator\PostValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[AsCommand(
     name: 'go',
@@ -21,7 +21,7 @@ class GoCommand extends Command
     public function __construct(
         private EntityManagerInterface $em,
         private PostService            $postService,
-        private ValidatorInterface     $validator,
+        private PostValidator          $postValidator,
     )
     {
         parent::__construct();
@@ -31,7 +31,7 @@ class GoCommand extends Command
     {
 
         $data = [
-            'title' => 'Title edited',
+            'title' => '',
             'description' => 'Description edited',
             'content' => 'Content edited',
             'published_at' => '2020-12-30',
@@ -49,8 +49,7 @@ class GoCommand extends Command
         $post->setStatus($data['status']);
         $post->setCategory($category);
 
-        $errors = $this->validator->validate($post);
-        dd($errors);
+        $this->postValidator->validate($post);
 
         $post = $this->postService->store($post);
         dd($post);
