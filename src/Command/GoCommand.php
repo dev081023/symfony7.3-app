@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\Category;
 use App\Entity\Post;
+use App\Resource\PostResource;
 use App\Service\PostService;
 use App\Validator\PostValidator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,6 +23,7 @@ class GoCommand extends Command
         private EntityManagerInterface $em,
         private PostService            $postService,
         private PostValidator          $postValidator,
+        private PostResource           $postResource,
     )
     {
         parent::__construct();
@@ -31,7 +33,7 @@ class GoCommand extends Command
     {
 
         $data = [
-            'title' => '',
+            'title' => 'Title another',
             'description' => 'Description edited',
             'content' => 'Content edited',
             'published_at' => '2020-12-30',
@@ -52,6 +54,9 @@ class GoCommand extends Command
         $this->postValidator->validate($post);
 
         $post = $this->postService->store($post);
+
+        $post = $this->postResource->postItem($post);
+
         dd($post);
 
         return Command::SUCCESS;
