@@ -2,8 +2,7 @@
 
 namespace App\Command;
 
-use App\Entity\Category;
-use App\Entity\Post;
+use App\Factory\PostFactory;
 use App\ResponseBuilder\PostResponseBuilder;
 use App\Service\PostService;
 use App\Validator\PostValidator;
@@ -24,6 +23,7 @@ class GoCommand extends Command
         private PostService            $postService,
         private PostValidator          $postValidator,
         private PostResponseBuilder    $postResponseBuilder,
+        private PostFactory            $postFactory,
     )
     {
         parent::__construct();
@@ -31,7 +31,6 @@ class GoCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-
         $data = [
             'title' => 'Title another',
             'description' => 'Description edited',
@@ -41,15 +40,7 @@ class GoCommand extends Command
             'category_id' => 1,
         ];
 
-        $category = $this->em->getReference(Category::class, $data['category_id']);
-        $post = new Post();
-
-        $post->setTitle($data['title']);
-        $post->setDescription($data['description']);
-        $post->setContent($data['content']);
-        $post->setPublishedAt(new \DateTimeImmutable($data['published_at']));
-        $post->setStatus($data['status']);
-        $post->setCategory($category);
+        $post = $this->postFactory->makePost($data);
 
         $this->postValidator->validate($post);
 
