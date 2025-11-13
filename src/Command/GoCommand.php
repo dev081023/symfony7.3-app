@@ -6,7 +6,6 @@ use App\Factory\PostFactory;
 use App\ResponseBuilder\PostResponseBuilder;
 use App\Service\PostService;
 use App\Validator\PostValidator;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,11 +18,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 class GoCommand extends Command
 {
     public function __construct(
-        private EntityManagerInterface $em,
-        private PostService            $postService,
-        private PostValidator          $postValidator,
-        private PostResponseBuilder    $postResponseBuilder,
-        private PostFactory            $postFactory,
+        private PostService         $postService,
+        private PostValidator       $postValidator,
+        private PostResponseBuilder $postResponseBuilder,
+        private PostFactory         $postFactory,
     )
     {
         parent::__construct();
@@ -40,11 +38,11 @@ class GoCommand extends Command
             'category_id' => 1,
         ];
 
-        $post = $this->postFactory->makePost($data);
+        $storePostInputDTO = $this->postFactory->makeStorePostInputDTO($data);
 
-        $this->postValidator->validate($post);
+        $this->postValidator->validate($storePostInputDTO);
 
-        $post = $this->postService->store($post);
+        $post = $this->postService->store($storePostInputDTO);
 
         $res = $this->postResponseBuilder->storePostResponse($post);
 
