@@ -39,7 +39,6 @@ class GoCommand extends Command
         ];
 
         $storePostInputDTO = $this->postFactory->makeStorePostInputDTO($data);
-
         $this->postValidator->validate($storePostInputDTO);
 
         $post = $this->postService->store($storePostInputDTO);
