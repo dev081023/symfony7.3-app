@@ -21,8 +21,8 @@ class EntityExistsValidator extends ConstraintValidator
 
         if (!$category) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('entity', $constraint->entity)
-                ->setParameter('id', $value)
+                ->setParameter('{{ entity }}', $constraint->entity)
+                ->setParameter('{{ id }}', $value)
                 ->addViolation();
         }
     }
