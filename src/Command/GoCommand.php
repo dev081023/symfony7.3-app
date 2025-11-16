@@ -5,7 +5,7 @@ namespace App\Command;
 use App\Factory\PostFactory;
 use App\ResponseBuilder\PostResponseBuilder;
 use App\Service\PostService;
-use App\Validator\PostValidator;
+use App\DTOValidator\PostDTOValidator;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,7 +19,7 @@ class GoCommand extends Command
 {
     public function __construct(
         private PostService         $postService,
-        private PostValidator       $postValidator,
+        private PostDTOValidator    $postValidator,
         private PostResponseBuilder $postResponseBuilder,
         private PostFactory         $postFactory,
     )
@@ -35,7 +35,7 @@ class GoCommand extends Command
             'content' => 'Content edited',
             'published_at' => '2020-12-30',
             'status' => 3,
-            'category_id' => 1,
+            'category_id' => 1000,
         ];
 
         $storePostInputDTO = $this->postFactory->makeStorePostInputDTO($data);

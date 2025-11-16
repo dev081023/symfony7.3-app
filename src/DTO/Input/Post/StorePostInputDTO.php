@@ -3,6 +3,8 @@
 namespace App\DTO\Input\Post;
 
 use App\DTO\Input\Assert;
+use App\Entity\Category;
+use App\Validator\Constraint\EntityExists;
 
 class StorePostInputDTO
 {
@@ -24,5 +26,6 @@ class StorePostInputDTO
     public ?int $status = 1;
 
     #[Assert\NotNull]
+    #[EntityExists(entity: Category::class)]
     public ?int $categoryId = null;
 }
