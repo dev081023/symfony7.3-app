@@ -8,7 +8,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class PostController extends AbstractController
 {
-    #[Route('/post', name: 'app_post')]
     public function index(): JsonResponse
     {
         return $this->json([
