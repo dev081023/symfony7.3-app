@@ -34,4 +34,13 @@ class PostResponseBuilder
 
         return new JsonResponse($postResource, $status, $headers, $isJson);
     }
+
+    public function showPostResponse(Post $post, $status = 200, $headers = [], $isJson = true): JsonResponse
+    {
+        $postOutputDTO = $this->postFactory->makePostOutputDTO($post);
+
+        $postResource = $this->postResource->postItem($postOutputDTO);
+
+        return new JsonResponse($postResource, $status, $headers, $isJson);
+    }
 }

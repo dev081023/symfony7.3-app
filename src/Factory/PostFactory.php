@@ -50,6 +50,7 @@ class PostFactory
     {
         $postOutput = new PostOutputDTO();
 
+        $postOutput->id = $post->getId();
         $postOutput->title = $post->getTitle();
         $postOutput->description = $post->getDescription();
         $postOutput->content = $post->getContent();
