@@ -17,6 +17,11 @@ class PostService
     {
     }
 
+    public function index(): array
+    {
+        return $this->postRepository->findAll();
+    }
+
     public function store(StorePostInputDTO $storePostInputDTO): Post
     {
         $post = $this->postFactory->makePost($storePostInputDTO);
