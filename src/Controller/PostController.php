@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\ResponseBuilder\PostResponseBuilder;
 use App\Service\PostService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,6 +12,7 @@ final class PostController extends AbstractController
 {
     public function __construct(
         private PostService $postService,
+        private PostResponseBuilder $postResponseBuilder,
     )
     {
     }
@@ -20,9 +22,6 @@ final class PostController extends AbstractController
     {
         $posts = $this->postService->index();
 
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/PostController.php',
-        ]);
+        return $this->postResponseBuilder->indexPostResponse($posts);
     }
 }

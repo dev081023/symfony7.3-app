@@ -18,4 +18,9 @@ class PostResource
     {
         return $this->serializer->serialize($post, 'json', ['groups' => ['post:item']]);
     }
+
+    public function postCollection(array $posts): string
+    {
+        return $this->serializer->serialize($posts, 'json', ['groups' => ['post:item']]);
+    }
 }

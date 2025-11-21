@@ -28,9 +28,9 @@ class PostResponseBuilder
 
     public function indexPostResponse(array $posts, $status = 200, $headers = [], $isJson = true): JsonResponse
     {
-        $postOutputDTO = $this->postFactory->makePostOutputDTO($post);
+        $postOutputDTOs = $this->postFactory->makePostOutputDTOs($posts);
 
-        $postResource = $this->postResource->postItem($postOutputDTO);
+        $postResource = $this->postResource->postCollection($postOutputDTOs);
 
         return new JsonResponse($postResource, $status, $headers, $isJson);
     }
