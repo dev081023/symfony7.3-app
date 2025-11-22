@@ -2,7 +2,7 @@
 
 namespace App\DTO\Input\Post;
 
-use App\DTO\Input\Assert;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Category;
 use App\Validator\Constraint\EntityExists;
 

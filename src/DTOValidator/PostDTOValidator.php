@@ -25,7 +25,7 @@ class PostDTOValidator
             foreach ($errors as $error) {
                 $messages[$error->getPropertyPath()][] = $error->getMessage();
             }
-            throw new ValidateException();
+            throw new ValidateException($messages);
         }
     }
 }
