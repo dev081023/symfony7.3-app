@@ -13,7 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class PostRepository extends ServiceEntityRepository
 {
     public function __construct(
-        ManagerRegistry $registry,
+        ManagerRegistry                $registry,
         private EntityManagerInterface $em,
     )
     {
@@ -21,6 +21,17 @@ class PostRepository extends ServiceEntityRepository
     }
 
     public function store(Post $post, $isFlush = true): Post
+    {
+        $this->em->persist($post);
+
+        if ($isFlush) {
+            $this->em->flush();
+        }
+
+        return $post;
+    }
+
+    public function update(Post $post, $isFlush = true): Post
     {
         $this->em->persist($post);
 
